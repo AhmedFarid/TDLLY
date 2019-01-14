@@ -25,7 +25,8 @@ class videoHome: UIViewController {
         let player = AVPlayer(url: path)
         
         let newLayer = AVPlayerLayer(player: player)
-        newLayer.frame = self.videoView.frame
+        newLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width , height: view.frame.height)
+        
         self.videoView.layer.addSublayer(newLayer)
         newLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         player.play()

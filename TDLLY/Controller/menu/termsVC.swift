@@ -10,21 +10,23 @@ import UIKit
 
 class termsVC: UIViewController {
 
+    @IBOutlet weak var desc: UILabel!
+    @IBOutlet weak var name: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        getData()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func getData() {
+        API_contectUs.termes(completion: ){ (error: Error?, success: Bool, data, des) in
+            if success {
+                self.desc.text = des
+                self.name.text = data
+            }else {
+                self.showAlert(title: "message", message: "\(data ?? "") ")
+            }
+            
+        }
     }
-    */
-
 }

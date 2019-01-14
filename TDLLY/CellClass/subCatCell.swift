@@ -10,4 +10,11 @@ import UIKit
 
 class subCatCell: UICollectionViewCell {
     
+    @IBOutlet weak var subName: UILabel!
+    
+    func configuerCell(prodect: subCats) {
+        
+        subName.text = prodect.title
+    }
+    
 }

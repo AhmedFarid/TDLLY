@@ -9,22 +9,63 @@
 import UIKit
 
 class myAddsVC: UIViewController {
+    
+    var subs = [myAdds]()
 
+    @IBOutlet weak var tabelView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        tabelView.delegate = self
+        tabelView.dataSource = self
+        
+        handleRefreshSub()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func handleRefreshSub() {
+        ads.myadds{(error: Error?, subs: [myAdds]?) in
+            if let subs = subs {
+                self.subs = subs
+                print("xxx\(self.subs)")
+                self.tabelView.reloadData()
+            }
+        }
     }
-    */
+    
+}
 
+extension myAddsVC: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return subs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? myadds {
+            let sub = subs[indexPath.item]
+            cell.configuerCell(prodect: sub)
+            return cell
+        }else {
+            return myadds()
+        }
+    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "suge", sender: subs[indexPath.item])
+//    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let destaiantion = segue.destination as? adSubDetiles{
+//            if let sub = sender as? subCatsDatas{
+//                destaiantion.singleItem = sub
+//            }
+//
+//        }
+//    }
 }
